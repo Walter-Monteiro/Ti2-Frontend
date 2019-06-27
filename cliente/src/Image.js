@@ -16,7 +16,7 @@ class Image extends Component{
 
         return(
             <div className="Image">
-            <img src = {'https://ipt-ti2-iptgram.azurewebsites.net/api/posts/'+this.props.id+'/image'}onClick = {this.Click}/>
+             <img src = {'https://ipt-ti2-iptgram.azurewebsites.net/api/posts/'+this.props.id+'/image'} onClick = {this.Click}/>
             </div>
 
         );
