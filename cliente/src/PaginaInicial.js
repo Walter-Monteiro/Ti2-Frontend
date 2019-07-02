@@ -24,16 +24,11 @@ class PaginaInicial extends Component {
         this.Login = this.Login.bind(this);
         this.Logout = this.Logout.bind(this);
         this.handleCommentSubmit = this.handleCommentSubmit.bind(this)
+        this.handleLike=this.handleLike.bind(this)
 
     }
     async componentDidMount() {
-        let response = await axios.get('https://ipt-ti2-iptgram.azurewebsites.net/api/posts');
-        //console.log(response.data[0].caption);
-        let postArray = response.data;
-        //muda o estado do objeto
-        this.setState({
-            posts: postArray
-        })
+        this.fetchPosts();
     }
     //evento
     async Click(id) {
@@ -134,6 +129,24 @@ class PaginaInicial extends Component {
         this.Click(idPost);
 
     }
+    async fetchPosts(){
+        let response = await axios.get('https://ipt-ti2-iptgram.azurewebsites.net/api/posts');
+        let postArray = response.data;
+        this.setState({
+            posts: postArray
+        })
+    }
+    async handleLike(idPost){
+        let response = await axios.post('https://ipt-ti2-iptgram.azurewebsites.net/api/posts/' + idPost+ '/like',null,{
+        withCredentials:true,
+        crossdomain:true,
+        headers:{
+            "Content-Type":"application/json"
+        }
+        });
+        this.fetchPosts();
+
+    }
     render() {
         return (
             <div className="PaginaInicial">
@@ -160,7 +173,7 @@ class PaginaInicial extends Component {
                             <h2>{p.user.name}</h2>,
                             <Image id={p.id} Click={this.Click} />,
                             <h2>{p.postedAt.substring(0, p.postedAt.indexOf("T"))}</h2>,
-                            <h3>{p.likes}</h3>,
+                            <button onClick={() => this.handleLike(p.id)}>{"👍"+ p.likes}</button>,
                             <h3>{p.comments}</h3>
                         ])
                     }.bind(this)
