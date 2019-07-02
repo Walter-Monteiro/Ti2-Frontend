@@ -11,6 +11,7 @@ class ImagePopup extends Component{
     render(){
 
         return(
+            <div className="model">
             <div className="ImagePopup">
                 <img src = {this.props.image} /> 
                 <h1>{this.props.user.name}</h1>
@@ -29,6 +30,7 @@ class ImagePopup extends Component{
                 )
                 }
                 <button onClick={this.closePopup}>❌</button>
+            </div>
             </div>
 
         );

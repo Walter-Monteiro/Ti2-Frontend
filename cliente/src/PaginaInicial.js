@@ -22,6 +22,7 @@ class PaginaInicial extends Component {
         this.SearchPost = this.SearchPost.bind(this);
         this.handleChange = this.handleChange.bind(this);
         this.Login = this.Login.bind(this);
+        this.Logout = this.Logout.bind(this);
 
     }
     async componentDidMount() {
@@ -79,7 +80,14 @@ class PaginaInicial extends Component {
             "userName": this.state.UserNameTxt,
             "password": this.state.PasswordTxt
         }
-        let response = await axios.post('https://ipt-ti2-iptgram.azurewebsites.net/api/account/login', obj)
+        let response = await axios.post('https://ipt-ti2-iptgram.azurewebsites.net/api/account/login', obj,{
+        withCredentials: true,
+        crossdomain: true,
+        headers:{
+            "Content-Type":"application/json"
+        }
+        
+    });
         //se conseguimos autenticar
         if (response.status === 200) {
             this.setState({
@@ -88,7 +96,27 @@ class PaginaInicial extends Component {
                 isAuthenticated: true
             })
         }
+
     }
+    async Logout(e){
+        e.preventDefault();
+        let obj = {
+            "userName": this.state.UserNameTxt,
+            "password": this.state.PasswordTxt
+        }
+        let response = await axios.post('https://ipt-ti2-iptgram.azurewebsites.net/api/account/logout', null,{
+        withCredentials: true,
+        crossdomain: true,
+        headers:{
+            "Content-Type":"application/json"
+        }
+        
+    });
+    this.setState({
+        isAuthenticated:false
+    })
+    }
+
     render() {
         return (
             <div className="PaginaInicial">
@@ -100,7 +128,7 @@ class PaginaInicial extends Component {
                 </form>
                 {
                     (this.state.isAuthenticated)?
-                    <button>logout</button>
+                    <button onClick={this.Logout} type="submit">logout</button>
                     :
                     <form className="PaginaInicial-LoginForm" onSubmit={this.Login}>
                     <input type="text" name="UserNameTxt" value={this.state.UserNameTxt} onChange={this.handleChange} />
