@@ -23,6 +23,7 @@ class PaginaInicial extends Component {
         this.handleChange = this.handleChange.bind(this);
         this.Login = this.Login.bind(this);
         this.Logout = this.Logout.bind(this);
+        this.handleCommentSubmit = this.handleCommentSubmit.bind(this)
 
     }
     async componentDidMount() {
@@ -39,6 +40,7 @@ class PaginaInicial extends Component {
         let srt = 'https://ipt-ti2-iptgram.azurewebsites.net/api/posts/' + id
         let response = await axios.get(srt);
         let obj = {
+            idPost:id,
             image: "https://ipt-ti2-iptgram.azurewebsites.net/api/posts/" + id + "/image",
             user: response.data.user.name,
             date: response.data.postedAt,
@@ -116,7 +118,22 @@ class PaginaInicial extends Component {
         isAuthenticated:false
     })
     }
+    async handleCommentSubmit(comment,idPost){
+        let obj ={
+            "postId":idPost,
+            "text": comment
+        };
+        let response =  await axios.post('https://ipt-ti2-iptgram.azurewebsites.net/api/comments',obj,{
+        withCredentials:true,
+        crossdomain:true,
+        headers:{
+            "Content-Type":"application/json"
+        }
+        });
+        //faz um novo pedidod pelos comentarios do post
+        this.Click(idPost);
 
+    }
     render() {
         return (
             <div className="PaginaInicial">
@@ -154,6 +171,7 @@ class PaginaInicial extends Component {
                     // se for verdade e renderizado senao nao e
                     this.state.ShowPopup &&
                     <ImagePopup
+                        idPost={this.state.ShowImage.idPost}
                         image={this.state.ShowImage.image}
                         user={this.state.ShowImage.user}
                         date={this.state.ShowImage.date}
@@ -161,6 +179,7 @@ class PaginaInicial extends Component {
                         likes={this.state.ShowImage.likes}
                         comments={this.state.ShowImage.comments}
                         closePopup={this.closePopup}
+                        handleCommentSubmit={this.handleCommentSubmit}
                     />
 
                 }
