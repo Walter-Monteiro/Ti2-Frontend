@@ -148,33 +148,31 @@ class PaginaInicial extends Component {
 
     }
     render() {
+    if(this.state.isAuthenticated==true){
         return (
             <div className="PaginaInicial">
                 <form className="PaginaInicial-SearchForm" onSubmit={this.SearchPost} >
-
-                    <input placeholder="Search Post... here" name="SearchTxt" onChange={this.handleChange} value={this.state.SearchTxt} />
-                    <button type="submit" >🔍</button>
-
+                    <div className="box">
+                    <input className="box-search" placeholder="Search Post... here" name="SearchTxt" onChange={this.handleChange} value={this.state.SearchTxt} />
+                    <button className="btn-search" type="submit" >🔍</button>
+                    </div>
                 </form>
                 {
                     (this.state.isAuthenticated)?
-                    <button onClick={this.Logout} type="submit">logout</button>
+                    <button onClick={this.Logout} type="submit" className="sair">Sair</button>
                     :
                     <form className="PaginaInicial-LoginForm" onSubmit={this.Login}>
-                    <input type="text" name="UserNameTxt" value={this.state.UserNameTxt} onChange={this.handleChange} />
-                    <input type="password" name="PasswordTxt" value={this.state.PasswordTxt} onChange={this.handleChange} />
-                    <button type="submit">Submeter</button>
                     </form>
                 }
                 {
                     this.state.posts.map(function (p) {
                         return ([
                             <h1>{p.caption}</h1>,
-                            <h2>{p.user.name}</h2>,
+                            <h2 className="users">{p.user.name}</h2>,
                             <Image id={p.id} Click={this.Click} />,
                             <h2>{p.postedAt.substring(0, p.postedAt.indexOf("T"))}</h2>,
-                            <button onClick={() => this.handleLike(p.id)}>{"👍"+ p.likes}</button>,
-                            <h3>{p.comments}</h3>
+                            <button className="likes" onClick={() => this.handleLike(p.id)}>{"👍"+ p.likes}</button>,
+                            <h3>{p.comments}<label> Comentarios</label></h3>
                         ])
                     }.bind(this)
                     )
@@ -198,6 +196,15 @@ class PaginaInicial extends Component {
                 }
             </div>
         );
+    }else{
+        return(
+            <form className="PaginaInicial-LoginForm" onSubmit={this.Login}>
+                    <input type="text" name="UserNameTxt" value={this.state.UserNameTxt} onChange={this.handleChange} />
+                    <input type="password" name="PasswordTxt" value={this.state.PasswordTxt} onChange={this.handleChange} />
+                    <button type="submit">Entrar</button>
+            </form>
+        );
     }
+}
 }
 export default PaginaInicial;

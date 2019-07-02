@@ -40,15 +40,19 @@ class ImagePopup extends Component{
                 {
                 this.props.comments.map(function (c) {
                     return ([
-                        <h4>{c.text}</h4>,
-                        <h4>{c.user.name}</h4>,
-                        <h4>{c.postedAt}</h4>
+                    <h4 className="users">{c.user.name}<label> disse:</label></h4>,
+                    <h4>{c.text}<label> No Dia:</label></h4>,
+                    <h4>{c.postedAt.substring(0, c.postedAt.indexOf("T"))}</h4>,
+                    <h4>*********************************************</h4>
+                    
                     ])
                 }.bind(this)
                 )
                 }
                 <form onSubmit ={this.handleCommentSubmit}>
+
                     <input type="text" value={this.state.commentText} onChange={this.handleCommentChange} placeholder="comente já"/>
+
                 </form>
 
                 <button onClick={this.closePopup}>❌</button>

@@ -1,8 +1,15 @@
 .ImagePopup{
 
-    /*background-color: #fefefe;
+    background-color: #191919;
     margin: auto;
     padding: 20px;
-    border: 1px solid #888;
-    width: 80%;*/
+    border: 1px solid white;
+    width: 80%;
+}
+.users{
+    color:#2ecc71;
+}
+label{
+    color:#c0c0c0;
+
 }
