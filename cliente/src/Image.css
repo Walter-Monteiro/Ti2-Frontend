@@ -1,3 +1,6 @@
-.img {border-radius: 50%;
-    widows: 200px;;
-    height: 200px;}
+.img {
+    border-radius: 50%;
+    width: 25%;
+    height: 25%;
+    object-fit: cover;
+}

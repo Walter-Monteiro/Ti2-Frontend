@@ -51,11 +51,11 @@ class ImagePopup extends Component{
                 }
                 <form onSubmit ={this.handleCommentSubmit}>
 
-                    <input type="text" value={this.state.commentText} onChange={this.handleCommentChange} placeholder="comente já"/>
+                    <input className="comment" type="text" value={this.state.commentText} onChange={this.handleCommentChange} placeholder="comente já"/>
 
                 </form>
 
-                <button onClick={this.closePopup}>❌</button>
+                <button className="close" onClick={this.closePopup}>❌</button>
             </div>
             </div>
 
